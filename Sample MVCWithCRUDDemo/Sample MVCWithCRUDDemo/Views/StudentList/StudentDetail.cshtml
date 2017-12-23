@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Sample_MVCWithCRUDDemo.Models.Student>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <div>
+        <h1>List of Student</h1>
+        <hr/>
+        @using (Html.BeginForm("SaveStudent", "StudentList", FormMethod.Post))
+        {
+            <input type="hidden" id="ID" name="ID"/>
+            <input type="text" placeholder="Student Name" name="StudentName" id="StudentName"/>
+            <input type="text" placeholder="Phone" name="MobileNumber" id="MobileNumber" />
+            <input type="text" placeholder="Email"  name="EmailId" id="EmailId"/>
+            <br/>
+            <button>Save</button>
+        }
+        <hr/>
+
+        <ul>
+            @foreach(var m in Model)
+            {
+                <li>@m.StudentName - @m.MobileNumber : @m.EmailId 
+            @Html.ActionLink("Delete","DeleteStudent","StudentList", new { id = @m.ID }, null)
+            <input type="button" value="Edit" onclick="EditStudent(@m.ID,'@m.StudentName','@m.MobileNumber','@m.EmailId')" />
+            </li>
+            }
+        </ul>
+    </div>
+    <script>
+        function EditStudent(ID,StudentName, MobileNumber, EmailId) {
+            $("#ID").val(ID);
+            $("#StudentName").val(StudentName);
+            $("#MobileNumber").val(MobileNumber);
+            $("#EmailId").val(EmailId);
+        }
+    </script>
+</body>
+</html>
